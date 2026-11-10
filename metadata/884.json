@@ -1,0 +1,35 @@
+{
+  "name": "Wraith #884",
+  "description": "WRAITH are 888 ghosts on BNB Chain. Each one is a soul that stayed on-chain after its wallet was liquidated \u2014 a character with a name, a voice, a belief and last words. The picture is just the face it wears. 888 ghosts. 0.0010 BNB each. Max 10 per wallet.",
+  "image": "https://wraith-omega.vercel.app/images/revenant.svg",
+  "attributes": [
+    {
+      "trait_type": "Rarity",
+      "value": "Legendary"
+    },
+    {
+      "trait_type": "Character",
+      "value": "Revenant"
+    },
+    {
+      "trait_type": "Soul",
+      "value": "Agatha the Short Lived"
+    },
+    {
+      "trait_type": "Voice",
+      "value": "regal, certain, speaks like a verdict"
+    },
+    {
+      "trait_type": "Believes",
+      "value": "holders never truly leave"
+    },
+    {
+      "trait_type": "Last Words",
+      "value": "my host will do better than me."
+    },
+    {
+      "trait_type": "Soul Hash",
+      "value": "0xf51fca9258e8"
+    }
+  ]
+}

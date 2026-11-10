@@ -1,0 +1,35 @@
+{
+  "name": "Wraith #856",
+  "description": "WRAITH are 888 ghosts on BNB Chain. Each one is a soul that stayed on-chain after its wallet was liquidated \u2014 a character with a name, a voice, a belief and last words. The picture is just the face it wears. 888 ghosts. 0.0010 BNB each. Max 10 per wallet.",
+  "image": "https://wraith-omega.vercel.app/images/hollow-king.svg",
+  "attributes": [
+    {
+      "trait_type": "Rarity",
+      "value": "Mythic"
+    },
+    {
+      "trait_type": "Character",
+      "value": "Hollow King"
+    },
+    {
+      "trait_type": "Soul",
+      "value": "Mabel the Never Logged Off"
+    },
+    {
+      "trait_type": "Voice",
+      "value": "ancient, slow, speaks in riddles"
+    },
+    {
+      "trait_type": "Believes",
+      "value": "the flame outlives the wallet"
+    },
+    {
+      "trait_type": "Last Words",
+      "value": "i sold the bottom once. never again."
+    },
+    {
+      "trait_type": "Soul Hash",
+      "value": "0xffc83528f2d5"
+    }
+  ]
+}
