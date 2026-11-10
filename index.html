@@ -272,7 +272,7 @@ footer{font-size:12px;padding:28px 0 36px}
 <div class="countdown"><div class="cd-box"><b id="cdH">48</b><span>hours</span></div><div class="cd-box"><b id="cdM">00</b><span>minutes</span></div><div class="cd-box"><b id="cdS">00</b><span>seconds</span></div></div>
 <p class="cd-note" id="cdNote">The book closes when the countdown ends — one entry per wallet, every entry checked by hand.</p>
 <div class="tierpills"><button class="pill on" style="--tc:#8FE3B0" onclick="selectTier(0)">Wisp</button><button class="pill" style="--tc:#7FB8E8" onclick="selectTier(1)">Shade</button><button class="pill" style="--tc:#D4AF37" onclick="selectTier(2)">Phantom</button><button class="pill" style="--tc:#B48CE8" onclick="selectTier(3)">Wraith</button><button class="pill" style="--tc:#E8A33D" onclick="selectTier(4)">Revenant</button><button class="pill" style="--tc:#EDEBE3" onclick="selectTier(5)">Hollow King</button></div>
-<div class="hero-cta"><button class="btn-gold" id="mintBtnHero" disabled title="Mint opens soon — contract not deployed yet">MINT — COMING SOON</button><a class="btn-ghost" href="#seance">Enter the séance ↓</a></div>
+<div class="hero-cta"><button class="btn-gold" onclick="mintNow()" id="mintBtnHero">MINT NOW</button><a class="btn-ghost" href="#seance">Enter the séance ↓</a></div>
 </div>
 <div class="hero-right">
 <div class="stat-row"><b id="mintedHero">0</b><span>Minted</span></div>
@@ -359,14 +359,14 @@ footer{font-size:12px;padding:28px 0 36px}
 <div id="paneWallet">
 <div id="totalCost">Total: 0.0010 BNB</div>
 <button class="btn-ghost" onclick="connectWallet()" id="connectBtn" style="margin-top:16px">CONNECT WALLET</button><br>
-<button class="btn-gold" id="mintBtn" disabled title="Mint opens soon — contract not deployed yet">MINT — COMING SOON</button>
+<button class="btn-gold" onclick="mintNow()" id="mintBtn">MINT NOW</button>
 <div id="walletNote">No browser wallet? Open this site inside your wallet app browser (MetaMask / Trust Wallet / Binance Wallet). Minting needs BNB for gas.</div>
 </div>
 <div id="paneAgent" style="display:none">
 <div class="promptbox"><b>Agent mint:</b> ask Muse in chat — <b>"Mint 1 Wraith"</b> (or any quantity up to 10). Muse mints from your connected wallet and shows the transaction before sending it.</div>
 <ol class="agentsteps"><li>Say <b>"Mint 1 Wraith"</b> in chat with Muse.</li><li>Check the preview (quantity + total in BNB).</li><li>Confirm — Muse sends the mint transaction.</li></ol>
 </div>
-<div style="font-size:13px;color:#8A8A8F;line-height:1.7">Contract: <span id="contractAddr2">coming soon</span> · chain: BNB Smart Chain (56)</div>
+<div style="font-size:13px;color:#8A8A8F;line-height:1.7">Contract: <span id="contractAddr2">0xfc8eb35eE412525361BBdA26Eb80Cb7b1a726852</span> · chain: BNB Smart Chain (56)</div>
 <div id="mintMsg"></div>
 </div>
 </div>
@@ -400,7 +400,7 @@ footer{font-size:12px;padding:28px 0 36px}
 <div class="mkt-subhead reveal">Recently minted</div>
 <div id="marketEmpty" class="mkt-empty reveal">🕯️ <b>No wraiths on the market yet</b> — mint hasn't opened. Be the first to mint, be the first to list.</div>
 <div id="marketBoard" class="mkt-board" style="display:none"></div>
-<div class="mkt-btns reveal"><button class="btn-ghost" disabled title="Explorer link activates after deploy">View on BscScan<span class="mk-sub">· after deploy</span></button></div>
+<div class="mkt-btns reveal"><a class="btn-ghost" href="https://bscscan.com/address/0xfc8eb35eE412525361BBdA26Eb80Cb7b1a726852" target="_blank" rel="noopener">View on BscScan</a></div>
 </section>
 
 <section id="docs">
@@ -416,7 +416,7 @@ footer{font-size:12px;padding:28px 0 36px}
 </ol>
 <div class="selbox">
 Mint with your wallet on BNB Smart Chain — connect above and use MINT NOW.<br>
-Contract: <code class="hex" id="contractAddr">0xKONTRAK (coming soon)</code>
+Contract: <code class="hex" id="contractAddr">0xfc8eb35eE412525361BBdA26Eb80Cb7b1a726852</code>
 mint(uint256): <code class="hex">0xa0712d68</code>
 currentPrice(): <code class="hex">0x9d1b464a</code>
 totalMinted(): <code class="hex">0xa2309ff8</code>
@@ -460,11 +460,11 @@ Chain: BNB Smart Chain (56)<br>
 </div>
 <footer><b>WRAITH</b> · 888 souls on BNB Chain<br>
 Mint runs through your own wallet. Souls live on BNB.<br>
-<span id="contractFoot"></span><br>
-<span id="mintStatus">Mint status: COMING SOON</span> · séance edition</footer>
+<span id="contractFoot">0xfc8eb35eE412525361BBdA26Eb80Cb7b1a726852</span><br>
+<span id="mintStatus">Mint status: LIVE</span> · séance edition</footer>
 </div>
 <script>
-const CONTRACT = "";
+const CONTRACT = "0xfc8eb35eE412525361BBdA26Eb80Cb7b1a726852";
 const MARKET = "";
 const CLOSE_ISO = "2026-11-13T00:00:00+07:00";
 const ENDPOINT = "";
