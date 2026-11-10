@@ -400,17 +400,17 @@ footer{font-size:12px;padding:28px 0 36px}
 <div class="sec-head reveal">
 <div class="eyebrow gold" data-i18n="market_eyebrow">04 · Market</div>
 <h2 data-i18n-html="market_h2">Trade your <em class="grad">wraiths.</em></h2>
-<p><span data-i18n="market_p">Once minted, a wraith is yours to keep — or trade. Listings below are live on-chain — never made up.</span> <b id="mktBadge">MARKET — COMING SOON</b></p>
+<p><span data-i18n="market_p">Once minted, a wraith is yours to keep — or trade. Listings below are live on-chain — never made up.</span> <b id="mktBadge">MARKET — LIVE</b></p>
 </div>
 <div class="mkt-form reveal"><h3 data-i18n="mkt_list_h">■ List your wraith</h3>
-<p class="mkt-note" style="margin-top:0" id="mktListNote">Listing opens when the market goes live — the marketplace contract is not deployed yet.</p>
+<p class="mkt-note" style="margin-top:0" id="mktListNote">List your wraith: enter the token ID and your price in BNB. Listing moves your NFT into the market contract (escrow) — you can cancel any time to get it back.</p>
 <input id="listTokenId" type="number" min="1" max="888" data-i18n-ph="mkt_token_ph" placeholder="Token ID">
 <input id="listPrice" type="text" inputmode="decimal" data-i18n-ph="mkt_price_ph" placeholder="Price in BNB">
-<button class="btn-gold" onclick="listNow()" disabled data-i18n="mkt_list_btn">LIST FOR SALE</button>
+<button class="btn-gold" onclick="listNow()"  data-i18n="mkt_list_btn">LIST FOR SALE</button>
 <div class="mkt-msg" id="marketMsg"></div>
 </div>
 <div class="mkt-grid" id="marketGrid"></div>
-<p class="mkt-note" id="mktFeeNote">The on-chain market opens after the marketplace contract is deployed. No listings yet — check back soon.</p>
+<p class="mkt-note" data-i18n="mkt_fee">Market fee: 5% — the seller receives 95% of the sale price. Fees go to the collection owner.</p><p class="mkt-note">Market contract: <code class="hex">0x6ED0aCeA1e03821003F3AA45cc79B239814C5CF9</code> · <a href="https://bscscan.com/address/0x6ED0aCeA1e03821003F3AA45cc79B239814C5CF9" target="_blank" rel="noopener">View on BscScan ↗</a></p>
 <div class="mkt-subhead reveal" data-i18n="mkt_recent">Recently minted</div>
 <div id="marketEmpty" class="mkt-empty reveal" data-i18n-html="mkt_empty">🕯️ <b>No wraiths on the market yet</b> — mint hasn't opened. Be the first to mint, be the first to list.</div>
 <div id="marketBoard" class="mkt-board" style="display:none"></div>
@@ -479,7 +479,7 @@ Chain: BNB Smart Chain (56)<br>
 </div>
 <script>
 const CONTRACT = "0xfc8eb35eE412525361BBdA26Eb80Cb7b1a726852";
-const MARKET = "";
+const MARKET = "0x6ED0aCeA1e03821003F3AA45cc79B239814C5CF9";
 const CLOSE_ISO = "2026-11-30T00:00:00+07:00";
 const ENDPOINT = "https://script.google.com/macros/s/AKfycbwZsec316eH9m8JCqEuTNMIcFqcT-Psloo1daV8W0VyN8KrFH5e-P6V34tSNhCinJAd/exec";
 const RPCS = ["https://bsc-dataseed.bnbchain.org", "https://rpc-bsc.48.club"];
