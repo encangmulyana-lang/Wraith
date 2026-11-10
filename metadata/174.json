@@ -1,0 +1,35 @@
+{
+  "name": "Wraith #174",
+  "description": "WRAITH are 888 ghosts on BNB Chain. Each one is a soul that stayed on-chain after its wallet was liquidated \u2014 a character with a name, a voice, a belief and last words. The picture is just the face it wears. 888 ghosts. 0.0010 BNB each. Max 10 per wallet.",
+  "image": "https://wraith-omega.vercel.app/images/phantom.svg",
+  "attributes": [
+    {
+      "trait_type": "Rarity",
+      "value": "Rare"
+    },
+    {
+      "trait_type": "Character",
+      "value": "Phantom"
+    },
+    {
+      "trait_type": "Soul",
+      "value": "Greta the Rebalancer"
+    },
+    {
+      "trait_type": "Voice",
+      "value": "calm, polite, never raises its voice"
+    },
+    {
+      "trait_type": "Believes",
+      "value": "green follows red, always"
+    },
+    {
+      "trait_type": "Last Words",
+      "value": "just one more candle."
+    },
+    {
+      "trait_type": "Soul Hash",
+      "value": "0x6c0fc9db1bb2"
+    }
+  ]
+}
