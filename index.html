@@ -29,7 +29,7 @@ header{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;justify-conte
 .navpills a,.navpills span{display:inline-block;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#C9C9CE;padding:8px 16px;border-radius:999px;white-space:nowrap;flex:none}
 .navpills a:hover{color:#D4AF37}
 .navpills .dim{color:#8A8A8F;cursor:default}
-.hero{min-height:100vh;display:grid;grid-template-columns:1.35fr .65fr;gap:56px;align-items:center;padding:140px 0 90px;position:relative}
+.hero{min-height:100vh;display:grid;grid-template-columns:1.35fr .65fr;gap:56px;align-items:center;padding:140px 0 90px;position:relative;overflow:hidden}
 .orb{position:absolute;width:340px;height:340px;border-radius:50%;right:4%;top:16%;background:radial-gradient(circle,rgba(143,227,176,.4),rgba(143,227,176,.1) 45%,transparent 70%);box-shadow:0 0 120px 40px rgba(143,227,176,.18);filter:blur(1px);z-index:0;transition:background .6s,box-shadow .6s;pointer-events:none}
 .hero-left{position:relative;z-index:2}
 .hero h1{font-size:clamp(44px,6.2vw,92px);line-height:1.05;margin:22px 0 26px}
@@ -294,7 +294,7 @@ footer{font-size:12px;padding:28px 0 36px}
 <div class="stat-row"><b class="gold">888</b><span data-i18n="stat_souls">Souls</span></div>
 <div class="stat-row"><b>0.0010</b><span data-i18n="stat_each">BNB each</span></div>
 </div>
-<div class="hero-hint" data-i18n="hero_hint">Scroll down · win the game · unlock the whitelist</div>
+<div class="hero-hint" data-i18n="hero_hint">Mint is open · no whitelist needed · win the game to join the whitelist</div>
 </section>
 
 <section id="seance">
@@ -302,13 +302,13 @@ footer{font-size:12px;padding:28px 0 36px}
 <div class="sec-head" style="margin-bottom:28px">
 <div class="eyebrow green" data-i18n="gate_eyebrow">01 · The Gate</div>
 <h2 data-i18n-html="gate_h2">Keep the flame<br><em class="grad">alive.</em></h2>
-<p data-i18n-html="gate_p"><b style="color:#D4AF37">Step 1 of 2 · unlock the form.</b> The whitelist form is locked. Win this short game to open it: ghosts are coming for the flame — tap them before they reach it. Keep it alive for ten seconds and the form appears right here.</p>
+<p data-i18n-html="gate_p"><b style="color:#D4AF37">Step 1 of 2 · unlock the form.</b> The whitelist is optional — minting is open to everyone, no whitelist needed. Win this short game to open the form: ghosts are coming for the flame — tap them before they reach it. Keep it alive for ten seconds and the form appears right here. The best last words get written into souls.</p>
 </div>
 <canvas id="gameCanvas"></canvas>
 <div class="game-hud"><span>⏱ <b id="gameTime">10.0s</b></span><span>🕯️ <b id="gameLives">🕯️🕯️🕯️</b></span><span>👻 <span data-i18n="hud_banished">banished:</span> <b id="gameBanished">0</b></span></div>
 <div class="game-msg" id="gameMsg" data-i18n="game_msg">Tap the ghosts before they touch the flame. Three touches and it dies. On a keyboard, space works too.</div>
 <button class="btn-gold" id="gameStart" style="margin-top:18px" data-i18n="game_start">LIGHT THE CANDLE</button>
-<div id="wlLocked" class="wl-locked" data-i18n-html="wl_locked">🔒 <b>The whitelist form is locked.</b> Win the game above to open it — then leave your wallet and your last words.</div>
+<div id="wlLocked" class="wl-locked" data-i18n-html="wl_locked">🔒 <b>The whitelist form is locked.</b> Minting doesn't need this — it's optional. Win the game above to open it — then leave your wallet and your last words.</div>
 <div id="wlFormWrap" style="display:none">
 <form class="wl-form" onsubmit="submitWhitelist(event)">
 <div class="eyebrow green" data-i18n="wl_step">Step 2 of 2 · Whitelist entries</div>
@@ -357,7 +357,7 @@ footer{font-size:12px;padding:28px 0 36px}
 <div class="sec-head">
 <div class="eyebrow gold" data-i18n="mint_eyebrow">02 · Mint</div>
 <h2 data-i18n-html="mint_h2">One soul<br>finds <em class="grad">you.</em></h2>
-<p data-i18n-html="mint_p">Each mint is a random draw from the six kinds of ghost. <b style="color:#D4AF37">0.0010 BNB</b> per wraith, max <b style="color:#D4AF37">10 per wallet</b>, max <b style="color:#D4AF37">10 per transaction</b>. Mint from your wallet.</p>
+<p data-i18n-html="mint_p">Each mint is a random draw from the six kinds of ghost. <b style="color:#D4AF37">0.0010 BNB</b> per wraith, max <b style="color:#D4AF37">10 per wallet</b>, max <b style="color:#D4AF37">10 per transaction</b>. Mint from your wallet. <b style="color:#D4AF37">No whitelist needed</b> — minting is open to everyone. The whitelist below is a separate bonus: the best last words get written into souls.</p>
 </div>
 <div class="stat3">
 <div><b>888</b><span class="lbl-full" data-i18n="stat_supply">Total supply</span><span class="lbl-short" data-i18n="stat_supply_short">Supply</span></div>
@@ -495,7 +495,7 @@ const TIERS_JS = [
   {char:"Hollow King", color:"#EDEBE3"}
 ];
 let provider=null, signer=null, userAddr=null;
-let pausedState=true;
+let pausedState=true; let checkedOnce=false;
 let lastMinted=null;
 /* ---- i18n: EN / JA / ZH (default EN, choice saved in localStorage) ---- */
 const I18N={
@@ -506,14 +506,14 @@ hero_lede:'They were liquidated in one block and never logged off. Complete the 
 cd_hours:'hours',cd_minutes:'minutes',cd_seconds:'seconds',
 cd_note:'The book closes when the countdown ends — one entry per wallet, every entry checked by hand.',
 hero_cta:'Enter the séance ↓',stat_minted:'Minted',stat_souls:'Souls',stat_each:'BNB each',
-hero_hint:'Scroll down · win the game · unlock the whitelist',
+hero_hint:'Mint is open · no whitelist needed · win the game to join the whitelist',
 gate_eyebrow:'01 · The Gate',
 gate_h2:'Keep the flame<br><em class="grad">alive.</em>',
-gate_p:'<b style="color:#D4AF37">Step 1 of 2 · unlock the form.</b> The whitelist form is locked. Win this short game to open it: ghosts are coming for the flame — tap them before they reach it. Keep it alive for ten seconds and the form appears right here.',
+gate_p:'<b style="color:#D4AF37">Step 1 of 2 · unlock the form.</b> The whitelist is optional — minting is open to everyone, no whitelist needed. Win this short game to open the form: ghosts are coming for the flame — tap them before they reach it. Keep it alive for ten seconds and the form appears right here. The best last words get written into souls.',
 hud_banished:'banished:',
 game_msg:'Tap the ghosts before they touch the flame. Three touches and it dies. On a keyboard, space works too.',
 game_start:'LIGHT THE CANDLE',
-wl_locked:'🔒 <b>The whitelist form is locked.</b> Win the game above to open it — then leave your wallet and your last words.',
+wl_locked:'🔒 <b>The whitelist form is locked.</b> Minting doesn\'t need this — it\'s optional. Win the game above to open it — then leave your wallet and your last words.',
 wl_step:'Step 2 of 2 · Whitelist entries',wl_h3:'Light three candles. Leave a trace.',
 wl_wallet:'Your wallet',wl_words:'Your last words — your worst trade, in a few words',wl_name:'Your name (optional)',
 wl_submit:'WRITE MY NAME IN THE BOOK',
@@ -528,7 +528,7 @@ souls_p:'Most collections sell an image and a promise. A WRAITH is built the oth
 pieces:'pieces',soul_label:'soul',
 mint_eyebrow:'02 · Mint',
 mint_h2:'One soul<br>finds <em class="grad">you.</em>',
-mint_p:'Each mint is a random draw from the six kinds of ghost. <b style="color:#D4AF37">0.0010 BNB</b> per wraith, max <b style="color:#D4AF37">10 per wallet</b>, max <b style="color:#D4AF37">10 per transaction</b>. Mint from your wallet.',
+mint_p:'Each mint is a random draw from the six kinds of ghost. <b style="color:#D4AF37">0.0010 BNB</b> per wraith, max <b style="color:#D4AF37">10 per wallet</b>, max <b style="color:#D4AF37">10 per transaction</b>. Mint from your wallet. <b style="color:#D4AF37">No whitelist needed</b> — minting is open to everyone. The whitelist below is a separate bonus: the best last words get written into souls.',
 stat_supply:'Total supply',stat_supply_short:'Supply',stat_price:'BNB each',stat_price_short:'Price',
 qty_label:'Quantity (1–10)',qty_max:'MAX 10',tab_wallet:'Wallet',tab_agent:'Agent',connect_btn:'CONNECT WALLET',
 wallet_note:'No browser wallet? Open this site inside your wallet app browser (MetaMask / Trust Wallet / Binance Wallet). Minting needs BNB for gas.',
@@ -574,7 +574,7 @@ rm_p4_t:'The Candle',
 rm_p4_d:'Lit when the last wraith has a host. Hosts hear about it first.',
 rm_foot:'Dates are set when each phase ships — not before.',
 foot_line:'Mint runs through your own wallet. Souls live on BNB.',
-mint_now:'MINT NOW',mint_soon_btn:'MINT — COMING SOON',mint_live:'Mint status: LIVE',mint_soon:'Mint status: COMING SOON',
+mint_now:'MINT NOW',mint_soon_btn:'MINT — COMING SOON',mint_live:'Mint status: LIVE',mint_soon:'Mint status: COMING SOON',mint_checking:'CHECKING MINT STATUS…',mint_checking_status:'Mint status: CHECKING…',
 bar_loading:'Loading live count…',bar_none:'Contract coming soon — mint not open yet.',bar_noload:'Could not load live count — check your connection and refresh.',
 bar_tpl:'{n} of 888 minted ({p}%)',total_tpl:'Total for {n}: {x} BNB',
 cd_closed:'The book is closed. No new names — the dead are reading the ones already written.',
@@ -618,14 +618,14 @@ hero_lede:'彼らは1ブロックで清算され、二度とログオフしな�
 cd_hours:'時間',cd_minutes:'分',cd_seconds:'秒',
 cd_note:'カウントダウンが終われば本は閉じる——1ウォレット1件、手作業で確認します。',
 hero_cta:'セアンスに入る ↓',stat_minted:'ミント済み',stat_souls:'ソウル',stat_each:'BNB/体',
-hero_hint:'下へスクロール · ゲームに勝つ · ホワイトリストを解放',
+hero_hint:'ミント公開中 · ホワイトリスト不要 · ゲームに勝ってホワイトリストに参加',
 gate_eyebrow:'01 · 門',
 gate_h2:'炎を<br><em class="grad">守り抜け。</em>',
-gate_p:'<b style="color:#D4AF37">ステップ1/2 · フォームを解放。</b>ホワイトリストのフォームはロックされています。この短いゲームに勝って開きましょう。ゴーストたちが炎に迫ってきます——届く前にタップして追い払ってください。10秒守り切れば、ここにフォームが現れます。',
+gate_p:'<b style="color:#D4AF37">ステップ1/2 · フォームを解放。</b>ホワイトリストは任意です——ミントは誰でもでき、ホワイトリストは不要です。この短いゲームに勝ってフォームを開きましょう。ゴーストたちが炎に迫ってきます——届く前にタップして追い払ってください。10秒守り切れば、ここにフォームが現れます。最高の遺言はソウルに刻まれます。',
 hud_banished:'追放：',
 game_msg:'ゴーストが炎に触れる前にタップしてください。3回触れられたら炎は消えます。キーボードならスペースキーでも追放できます。',
 game_start:'ろうそくに火を灯す',
-wl_locked:'🔒 <b>ホワイトリストのフォームはロックされています。</b>上のゲームに勝って開きましょう——ウォレットと遺言を残してください。',
+wl_locked:'🔒 <b>ホワイトリストのフォームはロックされています。</b>ミントにこれは不要です——任意のものです。上のゲームに勝って開きましょう——ウォレットと遺言を残してください。',
 wl_step:'ステップ2/2 · ホワイトリスト登録',wl_h3:'三本のろうそくに火を灯し、痕跡を残せ。',
 wl_wallet:'あなたのウォレット',wl_words:'遺言——あなたの最悪のトレードを一言で',wl_name:'あなたの名前（任意）',
 wl_submit:'本に私の名を記す',
@@ -640,7 +640,7 @@ souls_p:'ほとんどのコレクションは画像と約束を売る。WRAITH�
 pieces:'体',soul_label:'魂',
 mint_eyebrow:'02 · ミント',
 mint_h2:'ひとつの魂が、<br><em class="grad">あなたを見つける。</em>',
-mint_p:'ミントは六種のゴーストからのランダム抽選。<b style="color:#D4AF37">0.0010 BNB</b>/体、<b style="color:#D4AF37">1ウォレット最大10体</b>、<b style="color:#D4AF37">1トランザクション最大10体</b>。ウォレットからミントしてください。',
+mint_p:'ミントは六種のゴーストからのランダム抽選。<b style="color:#D4AF37">0.0010 BNB</b>/体、<b style="color:#D4AF37">1ウォレット最大10体</b>、<b style="color:#D4AF37">1トランザクション最大10体</b>。ウォレットからミントしてください。<b style="color:#D4AF37">ホワイトリストは不要です</b>——誰でもミントできます。下のホワイトリストは別のおまけです。最高の遺言はソウルに刻まれます。',
 stat_supply:'総供給量',stat_supply_short:'供給量',stat_price:'BNB/体',stat_price_short:'価格',
 qty_label:'数量（1〜10）',qty_max:'最大10',tab_wallet:'ウォレット',tab_agent:'エージェント',connect_btn:'ウォレットを接続',
 wallet_note:'ブラウザウォレットがありませんか？ウォレットアプリのブラウザ（MetaMask / Trust Wallet / Binance Wallet）内でこのサイトを開いてください。ミントにはガスのBNBが必要です。',
@@ -686,7 +686,7 @@ rm_p4_t:'ろうそく',
 rm_p4_d:'最後のレイスにホストがついたときに灯される。ホストたちが最初に知る。',
 rm_foot:'日付は各フェーズの公開時に決めます——それより前ではありません。',
 foot_line:'ミントはあなた自身のウォレットから。ソウルはBNBに生きる。',
-mint_now:'今すぐミント',mint_soon_btn:'ミント近日公開',mint_live:'ミント状況：公開中',mint_soon:'ミント状況：近日公開',
+mint_now:'今すぐミント',mint_soon_btn:'ミント近日公開',mint_live:'ミント状況：公開中',mint_soon:'ミント状況：近日公開',mint_checking:'ミント状況を確認中…',mint_checking_status:'ミント状況：確認中…',
 bar_loading:'ライブ数を取得中…',bar_none:'コントラクト近日公開——ミントはまだ始まっていません。',bar_noload:'ライブ数を取得できませんでした——接続を確認して更新してください。',
 bar_tpl:'{n}/888 ミント済み（{p}%）',total_tpl:'{n}体 合計：{x} BNB',
 cd_closed:'本は閉じました。新しい名前はもうありません——死者たちが既に書かれた名を読んでいます。',
@@ -730,14 +730,14 @@ hero_lede:'他们在一个区块内被清算，从此再也没有下线。完成
 cd_hours:'小时',cd_minutes:'分钟',cd_seconds:'秒',
 cd_note:'倒计时结束，名册即关闭——每个钱包限填一次，每条记录均人工核查。',
 hero_cta:'进入降灵会 ↓',stat_minted:'已铸造',stat_souls:'灵魂',stat_each:'每个 BNB',
-hero_hint:'向下滚动 · 赢下游戏 · 解锁白名单',
+hero_hint:'铸造已开启 · 无需白名单 · 赢下游戏加入白名单',
 gate_eyebrow:'01 · 大门',
 gate_h2:'守护火焰，<br><em class="grad">别让它熄灭。</em>',
-gate_p:'<b style="color:#D4AF37">第 1 步，共 2 步 · 解锁表单。</b>白名单表单已锁定。赢下这个小游戏即可解锁：幽灵正扑向火焰——在它们碰到火焰之前点击驱散。坚持 10 秒，表单就会出现在这里。',
+gate_p:'<b style="color:#D4AF37">第 1 步，共 2 步 · 解锁表单。</b>白名单是可选项——铸造对所有人开放，无需白名单。赢下这个小游戏即可解锁表单：幽灵正扑向火焰——在它们碰到火焰之前点击驱散。坚持 10 秒，表单就会出现在这里。最好的遗言将被写入灵魂。',
 hud_banished:'已驱散：',
 game_msg:'在幽灵碰到火焰之前点击驱散。被碰到 3 次，火焰就会熄灭。键盘上按空格键也可以驱散。',
 game_start:'点燃蜡烛',
-wl_locked:'🔒 <b>白名单表单已锁定。</b>赢下上面的游戏即可解锁——然后留下你的钱包地址和遗言。',
+wl_locked:'🔒 <b>白名单表单已锁定。</b>铸造不需要这个——它是可选项。赢下上面的游戏即可解锁——然后留下你的钱包地址和遗言。',
 wl_step:'第 2 步，共 2 步 · 白名单登记',wl_h3:'点亮三支蜡烛，留下一道痕迹。',
 wl_wallet:'你的钱包',wl_words:'你的遗言——用几句话写下你最糟糕的一笔交易',wl_name:'你的名字（可选）',
 wl_submit:'把我的名字写进名册',
@@ -752,7 +752,7 @@ souls_p:'大多数藏品卖的是一张图和一个承诺。WRAITH 反其道而�
 pieces:'个',soul_label:'灵魂',
 mint_eyebrow:'02 · 铸造',
 mint_h2:'一个灵魂<br>会<em class="grad">找到你。</em>',
-mint_p:'每次铸造都是从六种幽灵中随机抽取。<b style="color:#D4AF37">0.0010 BNB</b>/个，<b style="color:#D4AF37">每个钱包最多 10 个</b>，<b style="color:#D4AF37">每笔交易最多 10 个</b>。从你的钱包铸造。',
+mint_p:'每次铸造都是从六种幽灵中随机抽取。<b style="color:#D4AF37">0.0010 BNB</b>/个，<b style="color:#D4AF37">每个钱包最多 10 个</b>，<b style="color:#D4AF37">每笔交易最多 10 个</b>。从你的钱包铸造。<b style="color:#D4AF37">无需白名单</b>——任何人都可以铸造。下面的白名单是额外的奖励：最好的遗言将被写入灵魂。',
 stat_supply:'总供应量',stat_supply_short:'供应量',stat_price:'每个 BNB',stat_price_short:'价格',
 qty_label:'数量（1–10）',qty_max:'最多 10',tab_wallet:'钱包',tab_agent:'代理',connect_btn:'连接钱包',
 wallet_note:'没有浏览器钱包？请在钱包 App 的内置浏览器中打开本站（MetaMask / Trust Wallet / Binance Wallet）。铸造需要 BNB 作 gas。',
@@ -798,7 +798,7 @@ rm_p4_t:'蜡烛',
 rm_p4_d:'当最后一个 wraith 找到宿主时点燃。宿主会最先知晓。',
 rm_foot:'日期在每个阶段上线时确定——不会提前。',
 foot_line:'铸造通过你自己的钱包进行。灵魂栖息于 BNB。',
-mint_now:'立即铸造',mint_soon_btn:'铸造即将开启',mint_live:'铸造状态：进行中',mint_soon:'铸造状态：即将开启',
+mint_now:'立即铸造',mint_soon_btn:'铸造即将开启',mint_live:'铸造状态：进行中',mint_soon:'铸造状态：即将开启',mint_checking:'正在查询铸造状态…',mint_checking_status:'铸造状态：查询中…',
 bar_loading:'正在加载实时数量…',bar_none:'合约即将上线——铸造尚未开始。',bar_noload:'无法加载实时数量——请检查网络后刷新。',
 bar_tpl:'已铸造 {n}/888（{p}%）',total_tpl:'{n} 个，总计 {x} BNB',
 cd_closed:'名册已关闭。不再接受新名字——亡者正在阅读已写下的名字。',
@@ -858,8 +858,8 @@ function applyLang(l){
   document.querySelectorAll("[data-i18n-html]").forEach(el=>{ el.innerHTML=T(el.getAttribute("data-i18n-html")); });
   document.querySelectorAll("[data-i18n-ph]").forEach(el=>{ el.placeholder=T(el.getAttribute("data-i18n-ph")); });
   document.querySelectorAll("#langSw button").forEach(b=>{ b.classList.toggle("on",b.getAttribute("data-lang")===LANG); });
-  ["mintBtn","mintBtnHero"].forEach(id=>{ const b=document.getElementById(id); if(b){ b.disabled=pausedState; b.textContent=T(pausedState?"mint_soon_btn":"mint_now"); }});
-  const ms=document.getElementById("mintStatus"); if(ms) ms.textContent=T(pausedState?"mint_soon":"mint_live");
+  ["mintBtn","mintBtnHero"].forEach(id=>{ const b=document.getElementById(id); if(b){ b.disabled=pausedState||!checkedOnce; b.textContent=T(!checkedOnce?"mint_checking":pausedState?"mint_soon_btn":"mint_now"); }});
+  const ms=document.getElementById("mintStatus"); if(ms) ms.textContent=T(!checkedOnce?"mint_checking_status":pausedState?"mint_soon":"mint_live");
   const mb=document.getElementById("mktBadge"); if(mb) mb.textContent=T(MARKET?"mkt_live":"mkt_soon");
   const mln=document.getElementById("mktListNote"); if(mln) mln.textContent=T(MARKET?"mkt_list_note_open":"mkt_list_note_closed");
   const mfn=document.getElementById("mktFeeNote"); if(mfn) mfn.textContent=T("mkt_fee_closed");
@@ -1259,17 +1259,17 @@ async function updatePriceNow(id){
 }
 function setPausedUI(paused){
   pausedState=paused;
-  ["mintBtn","mintBtnHero"].forEach(id=>{ const b=document.getElementById(id); if(b){ b.disabled=paused; b.textContent=T(paused?"mint_soon_btn":"mint_now"); }});
-  const ms=document.getElementById("mintStatus"); if(ms) ms.textContent=T(paused?"mint_soon":"mint_live");
+  ["mintBtn","mintBtnHero"].forEach(id=>{ const b=document.getElementById(id); if(b){ b.disabled=paused||!checkedOnce; b.textContent=T(!checkedOnce?"mint_checking":paused?"mint_soon_btn":"mint_now"); }});
+  const ms=document.getElementById("mintStatus"); if(ms) ms.textContent=T(!checkedOnce?"mint_checking_status":paused?"mint_soon":"mint_live");
 }
 async function refresh(){
   if(!CONTRACT){ lastMinted=null; renderBarLabel(); return; }
   const res=await rpcCall(CONTRACT,SEL_TOTAL);
-  if(!res){ const lbl=document.getElementById("barLabel"); if(lbl) lbl.textContent=T("bar_noload"); setPausedUI(true); return; }
+  if(!res){ const lbl=document.getElementById("barLabel"); if(lbl) lbl.textContent=T("bar_noload"); checkedOnce=true; setPausedUI(true); return; }
   setMinted(parseInt(res,16));
   const pres=await rpcCall(CONTRACT,SEL_PAUSED);
   const paused=!pres || BigInt(pres)===1n;
-  setPausedUI(paused);
+  checkedOnce=true; setPausedUI(paused);
   loadMarket();
   loadListings();
 }
